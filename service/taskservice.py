@@ -1,3 +1,6 @@
+from common.db import db
+
+
 def get_task():
     return {"task": "get testing"}
 
