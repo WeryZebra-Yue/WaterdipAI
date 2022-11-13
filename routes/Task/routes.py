@@ -1,29 +1,34 @@
-from fastapi import FastAPI, APIRouter
-from routes.Task.controller import controllers
+from fastapi import FastAPI, APIRouter, Body, Response
+from service.taskservice import TaskService
+from common.models.TaskModel import TaskModel
+from typing import Union
+
 app = FastAPI()
 TaskRouter = APIRouter()
 
 
 @TaskRouter.get("/")
 def ListTasks():
-    return controllers.ListTasks()
+    return TaskService.list_task()
 
 
 @TaskRouter.get("/{id}")
 def GetTask(id: str):
-    return controllers.GetTask(id)
+    return TaskService.get_task(id)
 
 
 @TaskRouter.post("/")
-def CreateTask():
-    return controllers.CreateTask()
+def CreateTask(
+    task: TaskModel = Body(embed=True),
+):
+    return TaskService.create_task(task)
 
 
 @TaskRouter.put("/{id}")
-def UpdateTask(id: str):
-    return controllers.UpdateTask(id)
+def UpdateTask(id: str, task: TaskModel = Body(embed=True),):
+    return TaskService.update_task(id, task)
 
 
 @TaskRouter.delete("/{id}")
 def DeleteTask(id: str):
-    return controllers.DeleteTask(id)
+    return TaskService.delete_task(id)
