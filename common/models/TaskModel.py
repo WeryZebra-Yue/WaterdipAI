@@ -3,5 +3,5 @@ from typing import Union
 
 
 class TaskModel(BaseModel):
-    title:  str
+    title:  Union[str, None] = None
     is_completed: Union[bool, None] = False
